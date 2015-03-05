@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# ------------------------------------------------------------------
+
+USAGE="Usage: db2csv database SQL-File"
+
+# --- Option processing --------------------------------------------
+if [ $# == 0 ] ; then
+    echo $USAGE
+    exit 1;
+fi
+
+SQL=$(tr '\n' ' ' < $2)
+SAVE="${2##*/}"
+
+printf "\copy ( ${SQL%?} ) To '~/$SAVE.csv' With DELIMITER ';' CSV HEADER ENCODING 'latin1'" > /tmp/sql
+
+db $1 /tmp/sql
