@@ -5,14 +5,14 @@
 USAGE="Usage: db2csv database SQL-File"
 
 # --- Option processing --------------------------------------------
-if [ $# == 0 ] ; then
+if [ $# -ne 2 ] ; then
     echo $USAGE
     exit 1;
+else
+	SQL=$(tr '\n' ' ' < $2)
+	SAVE="${2##*/}_$1"
+
+	printf "\copy ( ${SQL%?} ) To '~/$SAVE.csv' With DELIMITER ';' CSV HEADER ENCODING 'UTF-8'" > /tmp/sql
+
+	db $1 /tmp/sql
 fi
-
-SQL=$(tr '\n' ' ' < $2)
-SAVE="${2##*/}"
-
-printf "\copy ( ${SQL%?} ) To '~/$SAVE.csv' With DELIMITER ';' CSV HEADER ENCODING 'latin1'" > /tmp/sql
-
-db $1 /tmp/sql
