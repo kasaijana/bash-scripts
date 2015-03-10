@@ -9,10 +9,10 @@ if [ $# -ne 2 ] ; then
     echo $USAGE
     exit 1;
 else
-	SQL=$(tr '\n' ' ' < $2)
-	SAVE="${2##*/}_$1"
+    SQL=$(tr '\n' ' ' < $2)
+    SAVE="${2##*/}_$1"
 
-	printf "\copy ( ${SQL%?} ) To '~/$SAVE.csv' With DELIMITER ';' CSV HEADER ENCODING 'UTF-8'" > /tmp/sql
+    printf "\copy ( ${SQL%?} ) To '~/$SAVE.csv' With DELIMITER ';' CSV HEADER ENCODING 'UTF-8'" > /tmp/sql
 
-	db $1 /tmp/sql
+    db $1 /tmp/sql
 fi
