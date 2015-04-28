@@ -1,10 +1,8 @@
 #!/bin/bash
-
 # ------------------------------------------------------------------
-
 USAGE="Usage: db2csv database SQL-File"
-
 # --- Option processing --------------------------------------------
+
 if [ $# -ne 2 ] ; then
     echo $USAGE
     exit 1;
